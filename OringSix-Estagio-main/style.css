@@ -1,0 +1,1094 @@
+/*==== RESET =====================================*/
+/*resetando todas as caixas 
+  filhas da tag ou caixa <html>.
+  As tags no CSS são tratadas como
+  caixas, toda tag é uma caixa no CSS.
+  É o famoso box-model.
+*/
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  /* 
+  Reseto a margin e o padding de todas as caixas/elementos da pagina deixando em 0px alem de mudar o comportamento da propriedade "box-sizing" declarando seu valor igual "border-box"!
+  */
+}
+a {
+  text-decoration: none; /*Propriedade da decoração do textos. Em todos os elementos <a> as decorações dos textos foram retiradas devido a declaração do valor "none". */
+}
+
+ul {
+  list-style: none;
+  /* para retirar o sublinhado dos textos de todos as tags <a></a> foi aplicado  
+     text-decoration: none; */
+}
+
+img {
+  width: 100%; /*para ficar mais responsivo - vai se adptar a largura da caixa pai*/
+  height: auto; /*faz com que a imagem se adaptar ao tamnho do contúdo inserido*/
+}
+
+/*==== VARIAVEIS =====================================*/
+:root {
+  /*aplicanda variaveis no elemento :root(tag <html>)
+    para facilitar mundanças grandes no layout. lembrando
+    que a pagina possui padrões e para deixar o layout
+    mais fexivel e econimizar tempo e esfoço, basta mudar
+    o valor em uma variavel e tudo muda.
+  */
+  --header-height: 4.5rem; /*autura do #header */
+  --hue: 159;
+
+  --base-color: hsl(var(--hue) 36% 57%);
+  --base-color-second: hsl(var(--hue) 65% 88%);
+  --base-color-alt: hsl(var(--hue) 57% 53%);
+  --title-color: hsl(var(--hue) 41% 10%);
+  --text-color: hsl(0 0% 46%);
+  --text-color-light: hsl(0 0% 98%);
+  --body-color: hsl(0 0% 98%);
+  font-size: 100%;
+
+  /*Fonts*/
+  --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+
+  --title-font: "Poppins", sans-serif;
+  --body-font: 400 1rem "DM Sans", sans-serif;
+}
+
+/*==== BASE =====================================*/
+html {
+  scroll-behavior: smooth;
+  /*para suavisar a transiçãode direcionamento das 
+  seções realizadas pelo menu e  outros que realizam
+  o evento "scroll" na janela de visuazação... */
+}
+
+body {
+  /*definindo a fonte e cor da fonte da pagina web na tag <body>
+  para não precisar realizar aplicação na maioria dos elementos então
+  aplico o padão de fonte que mais aparece na pagina. */
+  font: var(--body-font);
+  color: var(--text-color);
+  background: var(--body-color);
+  -webkit-font-smoothing: antialiased; /**/
+  /* peso, "familia", sans-serif*/
+  /*Utilizando as fonts do google*/
+}
+
+.title {
+  /*aplicando estilização nos titulos por que as seções compartilha
+    titulos padrões, muda em alguns casos.*/
+  font: 700 var(--title-font-size) var(--title-font);
+  color: var(--title-color);
+  -webkit-font-smoothing: antialiased; /**/
+  /*utilizando fontes do google*/
+}
+
+.button {
+  /* existem dois desses botões que são tags acoras.
+     criado para deixar o aspecto e a interação com
+     a pagina mais agradavel      */
+  background-color: var(--base-color);
+  color: var(--text-color-light);
+  height: 3.5rem;
+  display: inline-flex; /*para habilitar algumas  proprieade e
+                          fazer com que a altura definida seja aplicada*/
+  align-items: center; /*centralizando na vertical os itens da botão*/
+  padding: 0 2rem;
+  border-radius: 0.25rem; /*deixando as quinas do botão arendadas*/
+  font: 500 1rem var(--body-font); /*estilizando a fonte para ficar
+                                     mais bonito*/
+  transition: background 0.3s; /*muda a cor do background em 0.3s*/
+}
+
+.button:hover {
+  /*  quando o cursor do mouse passar sobre os botões 
+    a cor de fundo deles ira mudar deixando a interação
+    com o botão mais agradavel */
+  background: var(--base-color-alt);
+}
+
+.divider-1 {
+  /*.divider-1 é o separador (uma linha) das seções.
+    o divider-1 inicia com a coloração fraca na esquerda,
+    de forma linear e gradual  a coloração vai 
+    escurecendo para a direita*/
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 36%, 57%, 1),
+    hsla(var(--hue), 65%, 88%, 0.34)
+      /*a função linear-gradient() permite que os autores 
+      definam gradientes lineares para preenchimento (fill)
+       ou contornos (stroke) de elementos gráficos.*/
+  );
+}
+
+.divider-2 {
+  /*.divider-2 é o separador (uma linha) das seções.
+    o divider- inicia com a coloração fraca na direita,
+    de forma linear e gradual  a coloração vai 
+    escurecendo para a esquerda. esse faz o inverso do divider-1*/
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 65%, 88%, 0.34),
+    hsla(var(--hue), 36%, 57%, 1)
+      /*para o divider-2 fazer o inverso do divider-1 foi
+      preciso trocar de posições as hsla(). */
+  );
+}
+
+/*==== LAYOUT =====================================*/
+.container {
+  margin-left: 1.5rem; /* 24px/ 16px = 1.5rem*/
+  margin-right: 1.5rem;
+
+  /* essa estilização atribui margens nas laterais para que
+     seja reservado uma aréa no meio da pagina. é uma aréa
+     padrão para todas as seções  onde será inserido os conteúdo
+     das seções */
+}
+
+.grid {
+  display: grid;
+  gap: 2rem; /*32px/26*/
+  /* A prorpiedade display abilita outras propriedades uma delas 
+     é o "gap". todo  elemento ao receber a class "grid" abrira um
+     espaço padrão de 2rem  */
+}
+
+.section {
+  padding: calc(5rem + var(--header-height)) 0; /*80px/16px = 5rem*/
+  /*as seções possuem um padão de espaço entre o
+  conteúdo e os separadores. então foi declarado
+  uma areá em volta do conteudo na parte superior e
+  inferior da seção para aplica esse padrão
+  */
+}
+
+.section .title {
+  margin-bottom: 1rem; /*espaço infeior padão que os titulos
+                        <h2></h2> possuem*/
+}
+
+.section .subtitle {
+  font-size: var(--subtitle-font-size);
+  /*aplicado a somente um paragrafo do elemento header 
+    pertecente a seção de serviços para ficar igual está
+    no figma
+  */
+}
+
+.section header {
+  /*todo seção que tiver header vai ter 
+    as seguintes configurações abixo. */
+
+  margin-bottom: 4rem; /*aplicara um espaço entre a introdução
+                         e o restante da seção*/
+
+  /*normalmente eles conteram um <h2></h2> como
+    titulo e um paragrafo para realizar uma 
+    introdução da pagina. 
+    */
+}
+
+.section header p strong {
+  /*todo section que tiver header vai ter as seguintes 
+    configurações abixo */
+  color: var(--base-color);
+  /*aplicando cor na "logo" que está no header da seção de serviços
+    para deixar a introdução com visual mais rico */
+}
+
+#header {
+  border-bottom: 1px solid #e4e4e4; /*Apropriedade adiciona uma borda
+                                        na parte inferiro*/
+
+  display: flex; /*display: flex; para deixar os elementos dentro do header 
+                   tudo na horizontal ou em linha*/
+
+  position: fixed; /* declarado a fim de deixar o cabeçalho
+                     fixo no layout da pagina mes quando realizar
+                     o scroll na pagina*/
+
+  top: 0; /*top: 0; é só uma agarantia que o cabeçalho não 
+            vai ter deslocamento em cima */
+
+  left: 0; /*left: 0; é só uma agarantia que o cabeçalho 
+             não vai ter deslocamento na esquerda */
+
+  z-index: 100; /* z-index: 100; é para ficar visualmete acima dos demais conteúdos*/
+  background-color: var(--body-color);
+  width: 100%; /*width: 100%; garantindo que o cabeçalho oucupara toda a largura dos
+                 dispositivo */
+}
+
+#header.scroll {
+  /*a classe scroll está sendo utilizada no javaScript para
+  aplicar uma sombra bem fraca no cabeçalho ao realizar
+  o evento de scroll na janela de visualização*/
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.01);
+  background: red;
+}
+
+/*==== LOGO =====================================*/
+
+.logo {
+  font: 700 1.3125rem var(--title-font); /* 21px/16px = 1.3125rem */
+  /*a propriedade font está dando forma a logo*/
+  color: var(--title-color);
+  /*a propriedade color está aplicando a cor na logo inteira*/
+}
+
+.logo span {
+  color: var(--base-color);
+}
+
+.logo-alt span {
+  color: var(--body-color);
+  /*está sendo declarado que metade da logo
+    possuira a cor base da pagina*/
+}
+
+/*==== NAVEGATION =====================================*/
+
+#header nav {
+  height: var(
+    --header-height
+  ); /* aplicado a altura do cabeçalho igual está no figma*/
+
+  display: flex; /*O valor flex Exibe o conteudo das Caixas/tags ao do lado da outra para para o user! */
+  align-items: center; /*centralizando na vertical os elementos/conteudos
+                         inseridos no nav*/
+
+  justify-content: space-between; /*Após a propriedade "display" ser habilitada, é possivel acessar a propriedade  justify-content. o valor "space-between" posiciona o conteudo das caixas nos polos!*/
+
+  width: 100%; /*pegando 100% da largura da caixa pai (header, o cabeçalho da pagina)*/
+}
+
+nav ul li {
+  text-align: center; /*para centralizar os itens (opções de navegação do menu) da lista*/
+  position: relative; /* para criar um futuro pseudo elemento absoluto 
+                         mas sendo relativo as intens da lista*/
+}
+
+nav ul li a {
+  transition: color 0.3s;
+  /*aplcaindo a transição da cor dos textos referente as opções do menu.
+   */
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  /*aplica pro mobaile tambem */
+  color: var(--base-color);
+  /*ao passar o cursor do mouse sobre as opções no menu
+    a cor de textos das opçoes mudaram*/
+}
+
+nav ul li a::after {
+  /*é o pseudo elemento (a barrinha que aparecerá abaixo das opções do menu)*/
+  content: ""; /*conteú vazio por que so será adicionar uma cor de fundo*/
+
+  width: 0%; /*antes do usuário passar o curosr do mouse nas opções
+              o pseudo elemento terá sua largura igual a zero para que
+              não seja exibido nada*/
+
+  height: 0.13rem; /*altura do pseudo elemento*/
+  background: var(--base-color); /*cor do pseudo elemento (barra)*/
+
+  position: absolute; /*para criar um novo contexto, ficar entro camada dos seus 
+                        elementos acendentes que possuirem position: relative;*/
+  bottom: -1.5rem; /*realizando um deslocamento na parte inferior com valor negativo 
+                    para que o pseudo elementofique bem abaixo das opções do menu */
+
+  left: 0; /*declarando o deslocamento a esquerda como zero para que o pseudo elemento
+            ao realizar a transição inicie da esquerda para a direita*/
+
+  transition: width 0.3s; /* tempo de transiçao da lagura é de 0.3 segundos*/
+}
+
+nav ul li a:hover::after, /*quando passar o mouse das opções de navegação */
+nav ul li a.active:after {
+  width: 100%; /*quando o usuário passar o cursor do mouse sobre uma das opções do menu
+  o pseudo elemento ocupara 100% da lagura do seu elemento pai. */
+}
+
+nav .menu {
+  /*estilização do estado inicial do menu de navegação, menu fechado*/
+
+  opacity: 0; /*deixa o elemento transparente, "invisivel"  */
+
+  visibility: hidden; /*desabilita a visualização do icone e 
+                       impossibilitar interaçõs */
+
+  top: -20rem; /* top: -20rem; para deixar o menu muito acima ficando 
+                 fora da janela de visualização por que ao abrir o 
+                 menu ele se deslocará para o top: 0;*/
+
+  transition: 0.3s; /*aplicando um transição 0.3s 
+                      para tudo (opacidade, deslocamento...) */
+}
+
+nav .menu ul {
+  display: none;
+  /* ao abrir o menu a lista e suas opções piscavam por que
+     ja estavam sendo "exibida",não aos olhos do usuário mas
+     dentro da caixa ".menu". retiramos sua exibição declarando
+     display: none;
+     */
+}
+
+/*MENU ABERTO - somente será aberto quando o elemento nav receber a class
+  show.  que será adicionada por uma função no JavaScritp*/
+nav.show .menu {
+  opacity: 1; /*não fica mais transparente, ou seja, fica "visivel"*/
+
+  visibility: visible; /*reabilitando a visualização
+                         e interação com o menu de navegação*/
+
+  background: var(--body-color); /*aplicando a cor de fundo do menu*/
+
+  position: fixed; /* position: fixed; deixando ele acima de tudo e 
+                     fixo no layout da pagina inteira*/
+
+  top: 0; /*quando o menu for aberto ele se deslocará para top:0; */
+  left: 0; /*aplicando deslocamento zero a esquerda para o menu 
+            exibir o contúdo que ficava fora da janela de visualização*/
+
+  height: 100vh;
+  width: 100vw;
+  /* height: 100vh;  e  width: 100vw; faz com que o menu ocupe toda 
+     a janela de visualzação*/
+
+  display: grid; /*para habilitar o place-content e
+                   contralizar o elemento filho*/
+
+  place-content: center; /* realiza algum calculo e centraliza na vertical
+              e horizontal todo o conteúdo da lista */
+}
+
+nav.show .menu ul {
+  display: grid;
+  /*para retornar a exibição (display) da lista que foi retirada no
+  nav .menu ul aplicando um display: none; */
+}
+
+nav.show ul.grid {
+  gap: 4rem;
+  /*aplicando espaços entre os elementos da lista
+    quando o menu for aberto*/
+}
+
+main {
+  margin-top: var(--header-height);
+}
+
+/* toggle: exibe (liga) e desabilita a exibição (desliga) o menu  */
+.toggle {
+  color: var(--base-color);
+  /*declarando cor para os icone de fechar e abrir o menu */
+
+  font-size: 1.5rem;
+  /*Definindo o tamanho dos icones igual está no figma*/
+
+  cursor: pointer;
+  /*quando o usuário colocar o cursor em cima dos botões 
+  toggles, ele mudara para uma mão apontando o dedo*/
+}
+
+nav .icon-close {
+  /*.icon-close é o icone de fhechar o menu */
+  visibility: hidden; /*enquanto o menu estiver fechado 
+   o icone será desabilitado da janela
+   de visualização*/
+
+  opacity: 0; /*para deixar o icone transparente*/
+
+  position: absolute; /*cria um novo contexto e fica acima do
+                        elemento que possuir declarado position: relaive;*/
+
+  top: -1.5rem; /*para ele subir até sair da janela de visualização*/
+  right: 1.5rem; /*para ficar a direita e se deslocar 1.5rem */
+
+  transition: 0.3s; /*aplicando transição em tudo (deslocamento, opacidade...)*/
+}
+
+nav.show div.icon-close {
+  opacity: 1; /*não fica mais transparente, fica visivel*/
+
+  visibility: visible; /*reabilita a visualização e interação do icone */
+
+  right: 1.5rem; /*garante que ao abrir o menu, o icone possua 
+                   o mesmo deslocamento a direita.*/
+
+  top: 1.5rem; /*ao abrir o menu o icone se desloca para dentro da janela
+                 de visualização */
+}
+
+nav.show ul.grid {
+  gap: 4rem;
+  /*aplicando na horizontal espaços entre os elementos da lista
+    quando o menu for aberto*/
+}
+
+/*==== HOME =====================================*/
+#home {
+  overflow: hidden;
+  /*para corrigir um vazamento que ocorre 
+    no cabeçalho da pagina*/
+}
+
+#home .container {
+  margin: 0;
+  /*em outro momento será aplicado o padrão nos
+    textos margens laterais de 1.5rem. declaração
+    realizada para corrigir o espaçõ lateral dos 
+    text ou titulo*/
+}
+
+#home .image {
+  position: relative; /*a .image futuramente possuira
+  um pseudo elemento absoluto então é nescessario que ela 
+  seja a caixa com position:relative; na hierarquia   */
+}
+
+#home .image::before {
+  content: ""; /*conteúdo vazio para aplicar somente a cor de fundo
+                do pseudo elemento*/
+
+  height: 100%; /*ele pegar 100% da altura do seu elemento pai 
+                  que nesse caso é o ".image". por a unidade ser em 
+                  porcentagem a imagem será responsiva */
+
+  width: 100%; /*ele pegar 100% da largura do seu elemento pai 
+                 que nesse caso é o ".image". por a unidade ser em 
+                 porcentagem a imagem será responsiva */
+
+  background: var(
+    --base-color-second
+  ); /*declarando cor de fundo do pseudo elemento*/
+
+  position: absolute; /*é absoluto em relação ao seu elemento pai
+                        , o .image */
+  top: -16.8%; /*deslocamento superiro com valor negativo para o
+                pseudo elemento ficar acima da imagem*/
+
+  left: 16.7%; /*deslocamento da esquerda para a direita */
+
+  z-index: 0; /*para a imagem sobrepor o pseudo elemento*/
+}
+
+#home .image img {
+  position: relative; /*declarando position: relative;
+  para os elemntos <img> serem relativos aos pseudos elementos */
+
+  right: 2.93rem; /*Deslocando o elemento para ficar igual está no figma*/
+}
+
+#home .image img,
+#home .image::before {
+  border-radius: 0.25rem; /*arredondando as quinas das bordas da imagem e
+                            seus pseudo elementos */
+}
+
+#home .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  /*aplicando 1.5rem nas margens laterais para o 
+    elemento .text que contem o titulo da seção home
+    e o paragrafo ficarem centralizados*/
+
+  text-align: center;
+  /*deixa os textos, incuindo o botão que é uma tag <a> </a>
+    centralizando em aparelhos mobile*/
+}
+
+#home .text h2 {
+  margin-bottom: 1rem;
+  /*aplicando espaço entre o titulo principal da seção home
+    e o paragrafo abaixo*/
+}
+
+#home .text p {
+  margin-bottom: 2rem;
+  /*aplicando na vertical espaço de 2rem entre o 
+    paragrafo da seção home e o botão  */
+}
+
+/*==== ABOUT =====================================*/
+#about {
+  background: white;
+  /*aplicando branco para cor de fundo da seção about*/
+}
+
+#about .container {
+  margin: 0; /*zera as margens da seção about para 
+               grudar a imagem na margem esquerda*/
+}
+
+#about .image {
+  position: relative;
+  /*a .image da seção about futuramente possuira  
+  um pseudo elemento absoluto então é nescessario
+  que ela seja a caixa com position:relative; na hierarquia   */
+}
+
+#about .image::before {
+  content: ""; /*conteúdo vazio para aplicar somente a cor de fundo
+                do pseudo elemento*/
+
+  height: 100%; /*ele pegar 100% da altura do seu elemento pai 
+                  que nesse caso é o ".image". na seção about.
+                  por a unidade ser em porcentagem a imagem 
+                  será responsiva */
+
+  width: 100%; /*ele pegar 100% da largura do seu elemento pai 
+                 que nesse caso é o ".image". na seção about.
+                 por a unidade ser em porcentagem a imagem será
+                 responsiva */
+
+  background: var(
+    --base-color-second
+  ); /*declarando cor de fundo do pseudo elemento*/
+
+  position: absolute; /*é absoluto em relação ao seu
+                        elemento pai , o .image */
+
+  top: -8.25%; /*deslocamento superior(ds em pixels)acima do pseudo elemento
+                 da imagem imagem. ds/heigthDoElemto = 8.25%*/
+  left: -33.04%; /*distancia de deslocamento(dd) para a esquerda do elemento about .image::before 
+                  da imagem. dd/whidtDoElemento = 33.04%*/
+
+  z-index: 0; /*para a imagem sobrepor o pseudo elemento*/
+}
+
+#about .image img {
+  position: relative; /*esta sendo relativo para declarar 
+                        no seletor do pseudo elemento o
+                         z-index: 0; */
+  right: 2.93rem; /*deslocamento da direita para esquerda de 2.93rem*/
+
+  margin-bottom: 2rem; /*adicionando espaço entre a imagem e
+                        o titulo da seção sobre  */
+}
+
+#about .image img,
+#about .image::before {
+  border-radius: 0.25rem;
+  /*arredondando as quinas das bordas da imagem e
+  seus pseudo elementos */
+}
+
+#about .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  /*aplicando 1.5rem nas margens laterais para o 
+    elemento .text que contem o titulo da seção about
+    e o paragrafo ficarem centralizados. lembrado que 
+    foi zerado as margins no #about .container.
+    */
+}
+
+/*==== CARDS =====================================*/
+.cards.grid {
+  gap: 1.5rem;
+  /*aplicando na vertical espaço de 1.5rem entre os elementos
+    do elemento .cards*/
+}
+
+.card {
+  /*os cards se encontram na seção de seviços
+    e foram estilizados para deixar a seção mais
+    atraente visualmente*/
+  padding: 3.625rem 2rem; /*aplicando espaçõ interno entre o conteúdo
+                            e as bordas da carta*/
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08); /*sobram que dá o aspecto de cartas*/
+  border-bottom: 0.25rem solid var(--base-color); /*adiconando bordas inferiores*/
+  border-radius: 0.25rem 0.25rem 0 0; /*leftSuperior rightSuperior rightInferior leftInferior */
+  text-align: center; /*centralizando o texto dos cards na horizontal */
+}
+
+.card i {
+  display: block; /*aplicou display: block para declarar
+                   a margin-bottom. */
+
+  font-size: 5rem; /*aplicando 5rem de tamanho para
+                     os icones das cartas*/
+
+  color: var(--base-color); /*aplicando cor dos icones*/
+
+  margin-bottom: 1.5rem; /*aplicando espaço entre o icone e
+                           o titulo do card*/
+}
+
+.card .title {
+  font-size: 1.5rem; /*declarando o tamanho da fote do titulo*/
+  margin-bottom: 0.75rem; /*inserindo espaço entre o titulo e 
+                            o paragrafo*/
+}
+
+/*==== TESTIMONIALS =====================================*/
+#testimonials {
+  background: white;
+  /*aplicando a cor de fundo branca 
+    para a seção de depoimentos
+  */
+
+  overflow: hidden;
+  /*overflow: hidden; declarado para corrigir um 
+   erro que estava ocoredo na introdução (header) da seção*/
+}
+
+#testimonials .container {
+  margin-left: 0;
+  margin-right: 0;
+  /*zerando as margens laterais da seção about para 
+    grudar a imagem na margem esquerda*/
+}
+
+#testimonials header {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  /* aplicando 1.5rem nas marges laterais para seguir o
+     padrão do layout que se encontra no figma */
+  margin-bottom: 0rem;
+  /*no .section header {} foi declarado que as margens 
+    inferiores dos header das seções possuisem 4rem 
+    mas a seção de depoimentos a introdução não
+    precisa de 4rem de margem inferior graças a class
+    swiper*/
+}
+
+#testimonials blockquote {
+  /*dando forma de cards para os  slides que 
+    conteram os depoimentos dos clientes */
+
+  padding: 2rem; /*aplicando espaço interno de 2rem em todas 
+                   os quatros lados da caixa */
+
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08); /*aplicando sombra para 
+                                                    dar aspecto de cartas*/
+  border-radius: 0.25rem; /*arredondando as quantro 
+                           bordas dos slides*/
+}
+
+#testimonials blockquote p {
+  position: relative; /*será relativo para um caractere especial
+                        que será absoluto. O caractere é uma aspa dupla*/
+
+  text-indent: 1.875rem; /*Para colocar o espaçamento na primeira linha
+                           dos depoimentos feitos pelos clientes */
+
+  margin-bottom: 1.5rem; /*adicionando espaço inferior entre o paragrafo
+                           e a foto do cliente deixando igual o layout
+                           que se encontra no figma*/
+
+  color: var(--title-color); /*cor de fonte dos depoimentos*/
+}
+
+#testimonials blockquote p span {
+  /*este seletor é uma aspa dupla que está  no inico
+   dos depoimentos melhorar visualmente os depoimentos */
+
+  font: 700 3rem serif; /*dando formato as aspas duplas
+                          dos depoimentos*/
+
+  position: absolute; /*está sendo absoluta em relação ao
+                        elemento <p></p> */
+
+  top: -1rem; /*habilitada devido a declaração da propriedade 
+                "position". o top: -1rem; desloca a aspa para cima
+                buscando deixar a aspa dupla mais bem posicionada
+                visualmente */
+
+  left: -2rem; /*habilitada devido a declaração da propriedade 
+                 "position". realiza deslocamento para a esquerda
+                 a fim de ficar atrás da primeira palavra.*/
+
+  color: var(--base-color); /*aplicando a cor das aspas duplas*/
+}
+
+#testimonials cite {
+  /*cite é o elemento que contem a foto do cliente 
+    inserida na <img> </img> acompanhada do nome do cliente*/
+
+  display: flex; /*para deixar os elementos na horizontal ou em linha
+    e habilitar a propriedade align-items*/
+
+  align-items: center; /*habilitada devido a declaração do display: flex;
+          essa declaração faz com que o conteudo do elemento
+          cite fique centralizado na vertical*/
+
+  font-style: normal; /*o elemento cite possui estilo da fonte italico
+          e para deixar igual ao protótipo no figma foi
+          aplicado font-style: normal;*/
+}
+
+#testimonials cite img {
+  /*é a estilização das fotos dos cliente
+    da seção de depoimentos*/
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover; /*quando a imagem nao se encaixar adequadamento*/
+  clip-path: circle(
+
+  ); /*cria uma mascara oara a caixa. nesse caso a <img> esta ficando circular*/
+
+  margin: 0.5rem; /*gera um espaço em torno do elemento <img> </img> 
+                   a posicionando o layout de forma adequada*/
+}
+
+/*SWIPER*/
+
+.swiper-slide {
+  /* swiper-slide é uma das clases dos elementos card que se encontram
+     em suas listas de class */
+
+  height: auto; /**/
+  padding: 4rem 1rem; /*está aplicando espaço interno entre o
+                        conteúdo e as bordas da caixa  */
+}
+
+.swiper-pagination {
+  /*este seletor está estilizando as bolinhas
+    de paginação dos slides */
+  position: relative; /*não sei explicar*/
+  text-align: center; /*irá centralizar horizontalmente as bolinhas */
+  transition: 0.3s opacity; /*aplicando transição da opacidade 
+                              em 0.3 segundos*/
+  transform: translate3d(0, 0, 0); /*não sei*/
+  z-index: 10; /**/
+}
+
+.swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+  /* aplicando o tamanho das bolinhas - altura e largura */
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--base-color);
+  /* defindio a cor das bolinhas de paginação dos 
+  slides da seção de depoimentos */
+}
+
+/*====  CONTACT ============================ */
+#contact .grid {
+  gap: 4rem;
+  /*
+   aplica espaço vertical de 4rem entre os filhos direto
+   do .grid 
+  */
+}
+
+#contact .text p {
+  margin-bottom: 2rem;
+  /*aplicando espaço de 2rem entre o paragráfo e
+    o botão da seção contato para ficar o maix proximo
+    do layout da protótipo */
+}
+
+#contact .button i,
+#contact ul li i {
+  font-size: 1.5rem;
+  /*definindo o tamanho dos icones do botão
+  "entre em contato com a gente" e os de email, endereço e celular*/
+  margin-right: 0.625rem;
+  /*aplicando margem a direita para afastar o textos 
+    dos icones*/
+}
+
+#contact ul.grid {
+  gap: 2rem;
+  /*aplicando espaço na vertical entre os elementos <li> da lista
+    para ficar mais legivel e agradavel visualmente */
+}
+
+#contact ul li {
+  display: flex; /*para deixar os elementos da lista a
+                  linhados ao lado do outro*/
+  align-items: center;
+  /*centralizando os itens da lista na vertical */
+}
+
+#contact ul li i {
+  color: var(--base-color);
+  /*definindo a cor dos icons na lista da seção
+    de contato*/
+}
+
+/*====  FOOTER ============================ */
+footer {
+  background: var(--base-color);
+  /*cor de fundo do rodapé da pagina*/
+}
+
+footer.section {
+  padding: 4rem 0;
+  /*aplicando espaço 4rem na parte superior
+   entre o conteúdo e as borda da caixa e
+   zero(0) nas laterais. está o seguindo o layout do figma    */
+}
+
+footer .logo {
+  display: block; /*para abilitar outros propriedades 
+                    como a "marging-bottom"*/
+  margin-bottom: 0.75rem;
+  /*aplicando espaço entre a logo do rodapé da pagina
+    e o paragráfo logo abaixo dela*/
+}
+
+footer .brand p {
+  color: var(--text-color-light); /*cor da font do paragrafo*/
+  margin-bottom: 0.75rem;
+  /*aplicando margem inferior para empurrar outros elementos*/
+}
+
+footer i {
+  font-size: 1.5rem;
+  /* definindo o tamanho dos icones
+    das redes sociais no rodapé da pagina
+  */
+
+  color: var(--text-color-light);
+  /* definindo a ccor dos icones 
+     das redes sociais*/
+}
+
+footer .social {
+  grid-auto-flow: column;
+  /*vai deixar os icones em posição de colunas
+    ou seja vão ser posicionados horizontalmente
+    para seguir fiel ao layout do figma*/
+
+  width: fit-content; /*esta pegando a largua e adaptando ao espaço
+                        real que o conteúdo oucupa. para não oucupar
+                        toda alinha quando a janela  de visualização
+                        for 1200.
+                        */
+}
+
+footer .social a {
+  transition: 0.3s;
+  /*aplicando 0.3 segundo todos os tipos transição */
+  display: inline-block; /*nline-block para habilitar 
+                            as propriedades block*/
+}
+
+footer .social a:hover {
+  transform: translateY(
+    -8px
+  ); /*faz com que os icon se desloque na vertial para cima em -8px*/
+}
+
+.back-to-top {
+  /*é um botão que fica na direita
+    inferior da pagina. volta á seção home 
+    */
+  background: var(--base-color);
+  /*aplicando de fundo do botão*/
+
+  color: red; /*definindo a cor do icone*/
+
+  position: fixed; /*o botão ficará fixo no layout*/
+  right: 1rem; /*o botão ficará posicionado no canto 
+  direito e possuira 1rem de deslocamento da margem
+  direita*/
+  bottom: 1rem; /*o botão ficará posicionado no canto 
+  inferior do layout e possuira 1rem de deslocamento da margem inferior
+  direita*/
+
+  padding: 0.2rem; /*adicionando uma areá ao redor do
+                     icone, visualmente é o tamanho da aréa
+                     que o botão oucupará */
+
+  clip-path: circle();
+  /*aplicando uma mascara em formato de circulo para o botão*/
+
+  font-size: 1.5rem; /*definindo o tamanho do icone 
+                       do botão*/
+
+  line-height: 0; /* retira a altura de linha para não atrapalhar
+                     as declarações right: 1rem; e bottom: 1rem; */
+
+  visibility: hidden; /*enquanto o usuário não sair da seção home
+                        o botão fica desabilitado. */
+
+  opacity: 0; /*é só uma garantia e deixar um efeito bonito da
+                tansição*/
+
+  transition: 0.2s; /*transição de tudo em 0.3s*/
+
+  transform: translateY(
+    100%
+      /*para realizare um movimento na vertical: esconde o botão 
+        abaixo da janela de visualização */
+  );
+}
+
+.back-to-top.show {
+  visibility: visible; /*deixa o botão habilitado*/
+  opacity: 1; /*deixa o botão visivel*/
+  transform: translateY(
+    -2% /*para realizare um movimento na vertical: sobe o botão 
+      para cima da pagina*/
+  );
+}
+
+/*RESPONSIVO*/
+
+/*========= MEDIA QUERIES =========*/
+/* extra large devices: 1200 > */
+@media (min-width: 1200px) {
+  /*vai aplicar as auterações quando a 
+    tela do dispositivo do usuário possuir a largura minima de 1200px*/
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    /*ao deixar as marging left e right com valor "auto" 
+      fará com que o conteudo dentro da .container oucupe 
+      o restante das margens dos dolados deixando o elemento
+      .container centralizado */
+  }
+  .section {
+    padding: 10rem 0;
+    /*quando a largura da janela de visualização for no minimo
+    1200px será aplicado 10rem de espaço entre o conteudo e as
+    bordas superiores e inferiores das seções, nas laterais será
+    aplicado zero (0) de espaço*/
+  }
+
+  .section header,
+  #testimonials header {
+    max-width: 32rem; /*a largura maxima das <header> são 32rem*/
+    text-align: center; /*alinha o conteudo do <header> no centro*/
+    margin-left: auto; /*empurra o conteudo da margin esquerda no centro*/
+    margin-right: auto; /*empurra o conteudo da margin direota no centro*/
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+  /* navegation */
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex; /* deixar a <ul> ao lado da ".logo"*/
+  }
+
+  nav .menu ul li a.title {
+    font: var(--title-font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav .menu ul li a.title.active {
+    font-weight: bold;
+    -webkit-font-smoothing: auto;
+  }
+
+  nav .icon-menu {
+    display: none; /*retirar o icon de amburguer*/
+  }
+
+  /* layout */
+  main {
+    margin-top: var(
+      --header-height
+    ); /*é devido ao valor "fixed da propriedade no 
+    elemento #header que é necessário" para estabeleer a distancia dos elementos  
+    "main e #header" a fim de ficar mais proximo do prototipo que se encontra ni figma.*/
+  }
+
+  /* home */
+
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+  #home .image {
+    order: 1; /*muda a posição da .image para: posição 1 = 2º lugar*/
+  }
+
+  #home .text {
+    order: 0; /*muda a posição da .text para: posição 0 = 1º lugar*/
+    max-width: 24rem;
+    text-align: left;
+  }
+
+  /* about */
+  #about .container {
+    margin: 0 auto;
+    grid-auto-flow: column; /* faz com que o conteudo sofra adptação 
+                                em colunas e fez a rederenzaçao do conteudo*/
+  }
+  /* services */
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+    /*o card possui o display grid então essa propriedade
+     modela com colunms e edita o tamanho dessas colunms*/
+  }
+
+  .card {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  /* testimonials */
+  #testimonials .container {
+    margin-left: auto;
+    margin-right: auto;
+    /* vai pegar a margim restante de todos os filhos 
+       e vai empurrar de forma que ira centralizar 
+       todos os centeudos inseridos na #testimonials .container*/
+    overflow: hidden;
+  }
+
+  /* contact */
+  #contact .container {
+    grid-auto-flow: column; /*pega o display grid e deixa 
+                              fluir como colums automaticas */
+    align-items: center; /*alinha os intens ao centro*/
+  }
+
+  #contact .text {
+    max-width: 25rem; /*largura maxima da  #contact .text*/
+  }
+
+  /* footer */
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column; /*pega o display grid e deixa 
+                             fluir como colums automaticas */
+    align-items: center; /*alinha os intens ao centro*/
+
+    justify-content: space-between; /*adiciona espaço entre  
+                                      os conteudos alinhados*/
+  }
+
+  footer .logo {
+    font-size: 2.25rem;
+  }
+}
+
+/* large devices: 1023 > */
+/* large devices: 992 > */
+@media screen and (min-width: 992px) {
+  :root {
+    --title-font-size: 2.2rem;
+    --subtitle-font-size: 1.125rem;
+  }
+}
+/* medium devices: 767 > */
